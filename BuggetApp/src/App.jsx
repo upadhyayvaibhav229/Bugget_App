@@ -1,10 +1,11 @@
 import React from 'react'
-import Home from './Pages/Home'
+// import Home from './Pages/HomeBugget'
+import HomeBugget from './Pages/HomeBugget'
 
 const App = () => {
   return (
     <div>
-      <Home/>
+      <HomeBugget/>
       this is testing
     </div>
   )
