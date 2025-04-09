@@ -1,68 +1,69 @@
-import React from 'react'
-import { img } from '../assets'
+import React, { useState } from "react";
+import { useParams } from "react-router-dom";
+import Input from "../Components/Input";
+import Button from "../Components/Button";
+import {useDispatch,useSelector} from "@reduxjs/toolkit"
 
 const Home = () => {
+  const { name } = useParams(); // Get the name parameter from the URL
+  const [budgetName, setBudgetName] = useState("");
+  const [amount, setAmount] = useState("");
+  const dispatch = useDispatch(); // Assuming you have set up Redux and useDispatch
+  // Handle budget form submission
+
+  const buggets = useSelector((state) => state.bugget.budgets);
+    const handleAddBugget = () => {
+      
+    }
+
   return (
     <>
-
-
-      {/* Navbar */}
-      <div className="w-full max-w-screen-lg flex justify-between p-10">
-        <div className="flex items-center gap-x-2 hover:border-2">
-          <img className="h-[40px] w-[40px]" src={img.logo} alt="logo" />
-          <h1 className="text-3xl font-bold">HomeBudget</h1>
-        </div>
+      <div className="p-10">
+        <h1 className="font-bold text-5xl text-center md:text-left">
+          Welcome back{" "}
+          <span className="text-blue-500">{decodeURIComponent(name)}</span>
+        </h1>
+        <p className="mt-5 text-gray-600 text-xl text-center md:text-left">
+          Personal budgeting is the secret to financial freedom.
+        </p>
+        <p className="mt-3 text-gray-600 text-xl text-center md:text-left">
+          Create a budget to get started!
+        </p>
       </div>
-      <div className=" flex flex-wrap flex-col items-center justify-around ">
-        {/* Hero Section */}
-        <div className="mt-16 w-full max-w-screen-lg flex flex-wrap items-center justify-between">
-          {/* Left Content */}
-          <div className="flex flex-col space-y-4 max-w-lg">
-            <h1 className="text-6xl font-extrabold leading-tight">
-              Take Control <br /> of <span className="text-blue-400">Your Money</span>
-            </h1>
-            <p className="text-xl text-gray-600">
-              Personal budgeting is the secret to financial <br /> freedom.
-              Start your journey today.
-            </p>
 
-            {/* Input Field */}
-            <input
+      <div className="p-5">
+      <div className="max-w-3xl  shadow-2xl rounded-lg p-6 bg-white">
+        <div className="border-2 border-dashed border-gray-800 p-6 rounded-lg">
+          <h2 className="font-bold text-2xl text-center">Create a Budget</h2>
+          <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
+            <Input
+              label="Budget Name"
               type="text"
-              className="border border-gray-300 p-3 rounded w-[350px] focus:border-blue-500 focus:ring focus:ring-blue-300 focus:outline-none"
-              placeholder="What is your name?"
+              placeholder="e.g., ₹3500 for groceries"
+              value={budgetName}
+              onChange={(e) => setBudgetName(e.target.value)}
             />
-
-            {/* Buttons */}
-            <div className=" flex ">
-              <div className="inline-block border border-transparent hover:border-black hover:border-3 p-1 rounded">
-                <button
-                  type="button"
-                  className="bg-black text-white flex items-center gap-x-2 px-6 py-3 rounded text-lg font-semibold shadow-md cursor-pointer"
-                >
-                  <img className="w-6 h-6 bg-white p-1 rounded-full" src={img.account} alt="Account Icon" />
-                  Create Account
-                </button>
-              </div>
+            <Input
+              label="Amount"
+              type="number"
+              placeholder="e.g., ₹3500"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+            />
+            <div >
+              <Button
+                type="submit"
+                className="mt-5 bg-gray-800 text-white w-full sm:w-auto"
+                text="Create Budget ₹"
+              />
             </div>
-
-
-          </div>
-
-          {/* Right Illustration */}
-          <div className="hidden md:block">
-            <img className="w-[500px] h-[400px]" src={img.illstration} alt="Illustration" />
-          </div>
+          </form>
         </div>
       </div>
-      <div className="w-full overflow-hidden block">
-        <svg width="2115" height="196" viewBox="0 0 2115 196" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M0 47.1846L88.125 43.0509C176.25 38.9171 352.5 30.6496 528.75 47.1846C705 63.7197 881.25 105.057 1057.5 96.7897C1233.75 88.5222 1410 30.6496 1586.25 9.98078C1762.5 -10.688 1938.75 5.84702 2026.88 14.1145L2115 22.3821V196H2026.88C1938.75 196 1762.5 196 1586.25 196C1410 196 1233.75 196 1057.5 196C881.25 196 705 196 528.75 196C352.5 196 176.25 196 88.125 196H0V47.1846Z" fill="#1DBBC3" />
-        </svg>
-
       </div>
+      
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
