@@ -7,20 +7,14 @@ const HomeBugget = () => {
   const navigate = useNavigate();
   const handleSubmit = () =>{
     if (name.trim()) {
-      navigate(`/index${encodedURIComponent(name)}`)
+      navigate(`/index/${encodeURIComponent(name)}`)
     }
   };
   return (
     <>
 
 
-      {/* Navbar */}
-      <div className="w-full max-w-screen-lg flex justify-between p-10">
-        <div className="flex items-center gap-x-2 hover:border-2">
-          <img className="h-[40px] w-[40px]" src={img.logo} alt="logo" />
-          <h1 className="text-3xl font-bold">HomeBudget</h1>
-        </div>
-      </div>
+     
       <div className=" flex flex-wrap flex-col items-center justify-around ">
         {/* Hero Section */}
         <div className="mt-16 w-full max-w-screen-lg flex flex-wrap items-center justify-between">
@@ -68,7 +62,7 @@ const HomeBugget = () => {
       </div>
       <div className="w-full overflow-hidden block">
         <svg width="2115" height="196" viewBox="0 0 2115 196" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd" clip-rule="evenodd" d="M0 47.1846L88.125 43.0509C176.25 38.9171 352.5 30.6496 528.75 47.1846C705 63.7197 881.25 105.057 1057.5 96.7897C1233.75 88.5222 1410 30.6496 1586.25 9.98078C1762.5 -10.688 1938.75 5.84702 2026.88 14.1145L2115 22.3821V196H2026.88C1938.75 196 1762.5 196 1586.25 196C1410 196 1233.75 196 1057.5 196C881.25 196 705 196 528.75 196C352.5 196 176.25 196 88.125 196H0V47.1846Z" fill="#1DBBC3" />
+          <path fillRule="evenodd" clipRule="evenodd" d="M0 47.1846L88.125 43.0509C176.25 38.9171 352.5 30.6496 528.75 47.1846C705 63.7197 881.25 105.057 1057.5 96.7897C1233.75 88.5222 1410 30.6496 1586.25 9.98078C1762.5 -10.688 1938.75 5.84702 2026.88 14.1145L2115 22.3821V196H2026.88C1938.75 196 1762.5 196 1586.25 196C1410 196 1233.75 196 1057.5 196C881.25 196 705 196 528.75 196C352.5 196 176.25 196 88.125 196H0V47.1846Z" fill="#1DBBC3" />
         </svg>
 
       </div>
