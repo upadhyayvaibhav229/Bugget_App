@@ -1,20 +1,31 @@
 import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
-    expenses: [],
-    categories: [],
     budgets: [],
 }
 
-const BuggetSlice  = createSlice({
-    name: "bugget",
+const BudgetSlice  = createSlice({
+    name: "budget",
     initialState,
     reducers: {
-        addExpense: (state,action) =>{
-            state.expenses.push(action.payload)
+        addBudget: (state,action) =>{
+            state.budgets.push({
+                id: Date.now(),
+                name: action.payload.name,
+                amount:action.payload.amount,
+                expenses: []
+            })
+        },
+
+        addExpense: (state, action) => {
+            const {budgetsId, description, cost} = action.payload;
+            const budget = state.budgets.find(b => b.id === budgetsId)
+            if (budget) {
+                budget.expenses.push({description, cost})
+            }
         }
     }
 })
 
-export const {addExpense} = BuggetSlice.actions
-export default BuggetSlice.reducer
+export const {addExpense, addBudget} = BudgetSlice.actions
+export default BudgetSlice.reducer

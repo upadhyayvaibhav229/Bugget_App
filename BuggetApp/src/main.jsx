@@ -6,6 +6,8 @@ import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} fr
 // import Home from './Pages/HomeBugget.jsx'
 import HomeBugget from './Pages/HomeBugget.jsx'
 import Home from './Pages/Home.jsx'
+import { Provider } from 'react-redux'
+import store from './store/store.js'
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />} >
@@ -17,7 +19,7 @@ const router = createBrowserRouter(
 )
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  <Provider store={store}>
     <RouterProvider router={router} />
-  </StrictMode>,
+  </Provider>,
 )

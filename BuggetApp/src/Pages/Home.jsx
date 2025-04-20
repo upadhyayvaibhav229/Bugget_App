@@ -2,17 +2,17 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import Input from "../Components/Input";
 import Button from "../Components/Button";
-import {useDispatch,useSelector} from "@reduxjs/toolkit"
+import { useSelector, useDispatch } from "react-redux";
 
 const Home = () => {
   const { name } = useParams(); // Get the name parameter from the URL
   const [budgetName, setBudgetName] = useState("");
   const [amount, setAmount] = useState("");
-  const dispatch = useDispatch(); // Assuming you have set up Redux and useDispatch
+  // const dispatch = useDispatch(); // Assuming you have set up Redux and useDispatch
   // Handle budget form submission
 
-  const buggets = useSelector((state) => state.bugget.budgets);
-    const handleAddBugget = () => {
+  const budgets = useSelector((state) => state.Budget.budgets);
+  const handleAddBugget = () => {
       
     }
 
@@ -35,7 +35,10 @@ const Home = () => {
       <div className="max-w-3xl  shadow-2xl rounded-lg p-6 bg-white">
         <div className="border-2 border-dashed border-gray-800 p-6 rounded-lg">
           <h2 className="font-bold text-2xl text-center">Create a Budget</h2>
-          <form className="mt-6 space-y-6" onSubmit={handleSubmit}>
+          <form 
+          className="mt-6 space-y-6" 
+          // onSubmit={handleSubmit}
+          >
             <Input
               label="Budget Name"
               type="text"
