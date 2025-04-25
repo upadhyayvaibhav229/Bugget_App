@@ -13,7 +13,7 @@ const router = createBrowserRouter(
     <Route path='/' element={<App />} >
 
       <Route path='' element= {<HomeBugget />} />
-      <Route path='/index/:name' element= {<Home/>} />
+      <Route path='/index' element= {<Home/>} />
     </Route>
   )
 )

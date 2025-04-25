@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AddBuggets = () => {
+const Expenses = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const AddBuggets = () => {
   )
 }
 
-export default AddBuggets
+export default Expenses

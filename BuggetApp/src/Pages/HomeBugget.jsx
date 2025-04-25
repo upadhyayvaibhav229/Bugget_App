@@ -1,87 +1,106 @@
 import React, { useState } from "react";
-import { img } from "../assets";
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import Input from "../Components/Input";
+import Button from "../Components/Button";
+import { useSelector, useDispatch } from "react-redux";
+import { addBudget } from "../store/BuggetSlice";
+import ExpenseForm from "./ExpenseForm";
 
-const HomeBugget = () => {
-  const [name, setName] = useState("");
-  const navigate = useNavigate();
-  const handleSubmit = () => {
-    if (name.trim()) {
-      navigate(`/index/${encodeURIComponent(name)}`);
+const Home = () => {
+  const [budgetName, setBudgetName] = useState("");
+  const [amount, setAmount] = useState("");
+  const dispatch = useDispatch();
+  const name = localStorage.getItem("userName");
+
+  const budgets = useSelector((state) => state.Budget.budgets);
+  
+  const handleAddBugget = (e) => {
+    e.preventDefault();
+    if (budgetName && amount) {
+      const newBudget = {
+        id: Date.now(), // Better to use timestamp for unique ID
+        name: budgetName,
+        amount: parseFloat(amount),
+        expenses: [] // Initialize with empty expenses array
+      };
+      dispatch(addBudget(newBudget));
+      setBudgetName("");
+      setAmount("");
     }
   };
+
   return (
     <>
-      <div className=" flex flex-wrap flex-col items-center justify-around ">
-        {/* Hero Section */}
-        <div className="mt-16 w-full max-w-screen-lg flex flex-wrap items-center justify-between">
-          {/* Left Content */}
-          <div className="flex flex-col space-y-4 max-w-lg">
-            <h1 className="text-6xl font-extrabold leading-tight">
-              Take Control <br /> of{" "}
-              <span className="text-blue-400">Your Money</span>
-            </h1>
-            <p className="text-xl text-gray-600">
-              Personal budgeting is the secret to financial <br /> freedom.
-              Start your journey today.
-            </p>
+      <div className="p-10">
+        <h1 className="font-bold text-7xl text-center md:text-left">
+          Welcome back, <span className="text-blue-500">{name}</span>
+        </h1>
+        <p className="mt-5 text-gray-600 text-xl text-center md:text-left">
+          Personal budgeting is the secret to financial freedom.
+        </p>
+        <p className="mt-3 text-gray-600 text-xl text-center md:text-left">
+          Create a budget to get started!
+        </p>
+      </div>
 
-            {/* Input Field */}
-            <input
-              type="text"
-              className="border border-gray-300 p-3 rounded w-[350px] focus:border-blue-500 focus:ring focus:ring-blue-300 focus:outline-none"
-              placeholder="What is your name?"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-
-            {/* Buttons */}
-            <div className=" flex ">
-              <div className="inline-block border border-transparent hover:border-black hover:border-3 p-1 rounded">
-                <button
-                  onClick={handleSubmit}
-                  type="button"
-                  className="bg-black text-white flex items-center gap-x-2 px-6 py-3 rounded text-lg font-semibold shadow-md cursor-pointer"
-                >
-                  <img
-                    className="w-6 h-6 bg-white p-1 rounded-full"
-                    src={img.account}
-                    alt="Account Icon"
-                  />
-                  Create Account
-                </button>
+      <div className="p-5">
+        <div className="max-w-2xl shadow-2xl rounded-lg p-6 bg-white mb-10">
+          <div className="border-2 border-dashed border-gray-800 p-6 rounded-lg">
+            <h2 className="font-bold text-3xl">Create a Budget</h2>
+            <form className="mt-6 space-y-2" onSubmit={handleAddBugget}>
+              <Input
+                label="Budget Name"
+                labelClassName="text-2xl"
+                className="border border-gray-800"
+                type="text"
+                placeholder="e.g., Groceries"
+                value={budgetName}
+                onChange={(e) => setBudgetName(e.target.value)}
+                required
+              />
+              <Input
+                label="Amount"
+                labelClassName="text-2xl"
+                className="border border-gray-800"
+                type="number"
+                placeholder="e.g., ₹3500"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                required
+                min="0"
+              />
+              <div>
+                <Button
+                  type="submit"
+                  className="mt-5 bg-gray-800 text-white w-full sm:w-auto"
+                  text="Create Budget ₹"
+                />
               </div>
-            </div>
-          </div>
-
-          {/* Right Illustration */}
-          <div className="hidden md:block">
-            <img
-              className="w-[500px] h-[400px]"
-              src={img.illstration}
-              alt="Illustration"
-            />
+            </form>
           </div>
         </div>
-      </div>
-      <div className="w-full overflow-hidden block">
-        <svg
-          width="2115"
-          height="196"
-          viewBox="0 0 2115 196"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fillRule="evenodd"
-            clipRule="evenodd"
-            d="M0 47.1846L88.125 43.0509C176.25 38.9171 352.5 30.6496 528.75 47.1846C705 63.7197 881.25 105.057 1057.5 96.7897C1233.75 88.5222 1410 30.6496 1586.25 9.98078C1762.5 -10.688 1938.75 5.84702 2026.88 14.1145L2115 22.3821V196H2026.88C1938.75 196 1762.5 196 1586.25 196C1410 196 1233.75 196 1057.5 196C881.25 196 705 196 528.75 196C352.5 196 176.25 196 88.125 196H0V47.1846Z"
-            fill="#1DBBC3"
-          />
-        </svg>
+        
+        <div className="mt-10 space-y-8">
+          {budgets.length > 0 ? (
+            budgets.map((budget) => (
+              <div key={budget.id} className="mb-8">
+                <h3 className="text-lg font-semibold">
+                  {budget.name} - ₹{budget.amount}
+                </h3>
+                <ExpenseForm 
+                  budgetsId={budget.id} 
+                  BudgetName={budget.name} 
+                  budgets={budgets} // Pass the entire budgets array
+                />
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-600">No budgets created yet.</p>
+          )}
+        </div>
       </div>
     </>
   );
 };
 
-export default HomeBugget;
+export default Home;
